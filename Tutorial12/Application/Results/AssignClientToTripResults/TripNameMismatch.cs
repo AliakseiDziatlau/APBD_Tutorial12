@@ -1,0 +1,3 @@
+namespace Tutorial12.Application.Results.AssignClientToTripResults;
+
+public record TripNameMismatch;
