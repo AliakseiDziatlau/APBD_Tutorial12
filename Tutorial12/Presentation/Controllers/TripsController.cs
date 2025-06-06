@@ -20,7 +20,10 @@ public class TripsController : ControllerBase
     public async Task<IActionResult> GetAllTrips([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
     {
         var result = await _mediator.Send(new GetAllTripsQuery { Page = page, PageSize = pageSize });
-        return Ok(result);
+        return result.Match<IActionResult>(
+            dto => Ok(dto),
+            _ => NotFound(new { message = "Page number exceeds available number of pages." })
+        );
     }
 
     [HttpPost("{idTrip}/clients")]
